@@ -6,10 +6,8 @@
   <meta name="theme-color" content="#0F6E56" />
   <title>ספריית עובדים</title>
   <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="icon-192.png" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --green-dark:   #0F6E56;
       --green-mid:    #1D9E75;
@@ -23,228 +21,46 @@
       --border:       #DDE4E1;
       --text-primary: #111F1A;
       --text-secondary:#5A706A;
-      --text-danger:  #B91C1C;
       --radius-lg:    14px;
       --radius-md:    10px;
-      --radius-sm:    6px;
       --shadow:       0 1px 4px rgba(0,0,0,0.08);
     }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text-primary);
-      min-height: 100dvh;
-      direction: rtl;
-    }
-
-    /* ===== HEADER ===== */
-    .header {
-      background: var(--green-dark);
-      padding: 20px 16px 14px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    .header-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-    .app-title {
-      font-size: 19px;
-      font-weight: 600;
-      color: #fff;
-      letter-spacing: -0.3px;
-    }
-    .employee-count {
-      font-size: 12px;
-      color: rgba(255,255,255,0.7);
-      background: rgba(255,255,255,0.15);
-      padding: 3px 10px;
-      border-radius: 20px;
-    }
-    .search-wrap {
-      position: relative;
-    }
-    .search-icon {
-      position: absolute;
-      right: 11px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: rgba(255,255,255,0.6);
-      font-size: 15px;
-      pointer-events: none;
-    }
-    .search-input {
-      width: 100%;
-      background: rgba(255,255,255,0.18);
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: var(--radius-md);
-      padding: 9px 36px 9px 12px;
-      font-size: 14px;
-      color: #fff;
-      outline: none;
-      transition: background 0.2s;
-    }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; background: var(--bg); color: var(--text-primary); min-height: 100dvh; direction: rtl; }
+    .header { background: var(--green-dark); padding: 20px 16px 14px; position: sticky; top: 0; z-index: 10; }
+    .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .app-title { font-size: 19px; font-weight: 600; color: #fff; }
+    .employee-count { font-size: 12px; color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.15); padding: 3px 10px; border-radius: 20px; }
+    .search-wrap { position: relative; }
+    .search-input { width: 100%; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.25); border-radius: var(--radius-md); padding: 9px 36px 9px 12px; font-size: 14px; color: #fff; outline: none; }
     .search-input::placeholder { color: rgba(255,255,255,0.6); }
-    .search-input:focus { background: rgba(255,255,255,0.25); }
-
-    /* ===== LIST ===== */
-    .list-wrap {
-      padding: 10px 12px 80px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .employee-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      cursor: pointer;
-      transition: border-color 0.15s;
-    }
+    .search-icon { position: absolute; right: 11px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.6); pointer-events: none; }
+    .list-wrap { padding: 10px 12px 80px; display: flex; flex-direction: column; gap: 6px; }
+    .employee-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); cursor: pointer; transition: border-color 0.15s; }
     .employee-card.open { border-color: var(--green-border); }
-
-    .card-main {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 14px;
-    }
-    .avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: var(--green-light);
-      color: var(--green-dark);
-      font-weight: 600;
-      font-size: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
+    .card-main { display: flex; align-items: center; gap: 12px; padding: 12px 14px; }
+    .avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--green-light); color: var(--green-dark); font-weight: 600; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .card-info { flex: 1; min-width: 0; }
-    .card-name {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-primary);
-    }
-    .card-email {
-      font-size: 12px;
-      color: var(--text-secondary);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin-top: 2px;
-    }
-    .quick-btns {
-      display: flex;
-      gap: 6px;
-      flex-shrink: 0;
-    }
-    .qbtn {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 1px solid var(--border);
-      background: var(--bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      font-size: 17px;
-      transition: background 0.15s;
-    }
-    .qbtn:hover { background: var(--green-light); }
-
-    /* expanded */
-    .card-detail {
-      display: none;
-      border-top: 1px solid var(--green-light);
-      background: var(--green-light);
-      padding: 12px 14px;
-    }
+    .card-name { font-size: 15px; font-weight: 500; }
+    .card-sub { font-size: 12px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+    .quick-btns { display: flex; gap: 6px; flex-shrink: 0; }
+    .qbtn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border); background: var(--bg); display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 17px; }
+    .card-detail { display: none; border-top: 1px solid var(--green-light); background: var(--green-light); padding: 12px 14px; }
     .employee-card.open .card-detail { display: block; }
-
-    .detail-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 6px;
-      font-size: 13px;
-      color: var(--green-dark);
-    }
+    .detail-row { font-size: 13px; color: var(--green-dark); margin-bottom: 4px; }
     .detail-row span { color: var(--text-secondary); }
-    .detail-actions {
-      display: flex;
-      gap: 8px;
-      margin-top: 10px;
-    }
-    .daction {
-      flex: 1;
-      padding: 9px 4px;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--green-border);
-      background: var(--surface);
-      font-size: 13px;
-      color: var(--green-dark);
-      text-align: center;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      font-weight: 500;
-      transition: background 0.15s;
-    }
-    .daction:hover { background: #C8EDE0; }
-    .daction.mail {
-      color: var(--blue);
-      border-color: var(--blue-border);
-    }
-    .daction.mail:hover { background: var(--blue-light); }
-
-    /* ===== STATES ===== */
-    .state-box {
-      text-align: center;
-      padding: 48px 24px;
-      color: var(--text-secondary);
-    }
+    .detail-actions { display: flex; gap: 8px; margin-top: 10px; }
+    .daction { flex: 1; padding: 9px 4px; border-radius: var(--radius-md); border: 1px solid var(--green-border); background: var(--surface); font-size: 13px; color: var(--green-dark); text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 5px; font-weight: 500; }
+    .daction.mail { color: var(--blue); border-color: var(--blue-border); }
+    .state-box { text-align: center; padding: 48px 24px; color: var(--text-secondary); }
     .state-box .icon { font-size: 36px; margin-bottom: 10px; }
     .state-box p { font-size: 14px; }
     .state-box .sub { font-size: 12px; margin-top: 6px; color: #9CB4AF; }
-
-    .spinner {
-      width: 32px; height: 32px;
-      border: 3px solid var(--green-light);
-      border-top-color: var(--green-dark);
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      margin: 0 auto 12px;
-    }
+    .spinner { width: 32px; height: 32px; border: 3px solid var(--green-light); border-top-color: var(--green-dark); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 12px; }
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ===== FOOTER ===== */
-    .footer {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      padding: 8px 16px;
-      font-size: 11px;
-      color: var(--text-secondary);
-      text-align: center;
-    }
+    .footer { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); border-top: 1px solid var(--border); padding: 8px 16px; font-size: 11px; color: var(--text-secondary); text-align: center; }
   </style>
 </head>
 <body>
-
 <header class="header">
   <div class="header-top">
     <div class="app-title">ספריית עובדים</div>
@@ -268,207 +84,108 @@
 <footer class="footer" id="footer"></footer>
 
 <script>
-// ══════════════════════════════════════════════
-//  ⚙️  הגדרות — מלא את הפרטים שלך כאן
-// ══════════════════════════════════════════════
-const CONFIG = {
-  tenantId:     "b10345ab-0014-4890-8c12-e2498c9abcfb",
-  clientId:     "745fd5e8-eef0-490e-84ca-49bfeccd0ceb",
-  clientSecret: "YOUR_CLIENT_SECRET_HERE",   // ← הכנס את ה-Secret Value שקיבלת
+// ══════════════════════════════════════════
+//  ⚙️  הגדר כאן את ה-URL של ה-Worker שלך
+//  לאחר שתיצור אותו ב-Cloudflare
+// ══════════════════════════════════════════
+const WORKER_URL = "https://YOUR_WORKER_NAME.YOUR_SUBDOMAIN.workers.dev";
 
-  // נתיב הקובץ ב-SharePoint
-  // דוגמה: "sites/HR/HR-Directory/employees.xlsx"
-  sharepointHost: "polegpf.sharepoint.com",
-  sitePath:       "/sites/PolegContacts",    // ← שנה לפי ה-URL שלך
-  filePath:       "employees.xlsx",          // ← שם הקובץ ב-SharePoint
-
-  // שמות העמודות בקובץ Excel (בדיוק כפי שמופיעות בשורת הכותרת)
-  colName:  "שם עובד",
-  colEmail: "mail",
-  colPhone: "טלפון",
-};
-// ══════════════════════════════════════════════
+// שמות עמודות בקובץ Excel
+const COL_NAME  = "שם עובד";
+const COL_EMAIL = "mail";
+const COL_PHONE = "טלפון";
+// ══════════════════════════════════════════
 
 let allEmployees = [];
 let openIdx = null;
 
-// ── אימות ─────────────────────────────────────
-async function getToken() {
-  const url = `https://login.microsoftonline.com/${CONFIG.tenantId}/oauth2/v2.0/token`;
-  const body = new URLSearchParams({
-    grant_type:    "client_credentials",
-    client_id:     CONFIG.clientId,
-    client_secret: CONFIG.clientSecret,
-    scope:         "https://graph.microsoft.com/.default",
-  });
-  const res = await fetch(url, { method: "POST", body });
-  const data = await res.json();
-  if (!data.access_token) throw new Error("שגיאת אימות: " + (data.error_description || ""));
-  return data.access_token;
-}
-
-// ── שליפת Excel מ-SharePoint ────────────────────
-async function fetchEmployees() {
-  const token = await getToken();
-  const headers = { Authorization: "Bearer " + token };
-
-  // מציאת ה-Site ID
-  const siteRes = await fetch(
-    `https://graph.microsoft.com/v1.0/sites/${CONFIG.sharepointHost}:${CONFIG.sitePath}`,
-    { headers }
-  );
-  const siteData = await siteRes.json();
-  if (!siteData.id) throw new Error("לא נמצא ה-Site ב-SharePoint");
-  const siteId = siteData.id;
-
-  // מציאת הקובץ
-  const driveRes = await fetch(
-    `https://graph.microsoft.com/v1.0/sites/${siteId}/drive/root:/${CONFIG.filePath}`,
-    { headers }
-  );
-  const driveData = await driveRes.json();
-  if (!driveData["@microsoft.graph.downloadUrl"]) throw new Error("לא נמצא הקובץ");
-
-  // הורדת תוכן הקובץ
-  const xlsxRes = await fetch(driveData["@microsoft.graph.downloadUrl"]);
-  const arrayBuffer = await xlsxRes.arrayBuffer();
-
-  return parseExcel(arrayBuffer);
-}
-
-// ── פענוח Excel ────────────────────────────────
-function parseExcel(buffer) {
-  // קריאה בסיסית של XLSX ללא ספרייה חיצונית
-  // נשתמש ב-SheetJS דרך CDN
-  return new Promise((resolve) => {
-    const data = new Uint8Array(buffer);
-    const workbook = XLSX.read(data, { type: "array" });
-    const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    const rows = XLSX.utils.sheet_to_json(sheet, { defval: "" });
-
-    const employees = rows
-      .map(row => ({
-        name:  (row[CONFIG.colName]  || "").toString().trim(),
-        email: (row[CONFIG.colEmail] || "").toString().trim(),
-        phone: (row[CONFIG.colPhone] || "").toString().trim(),
-      }))
-      .filter(e => e.name);
-
-    resolve(employees);
-  });
-}
-
-// ── עיצוב ───────────────────────────────────────
 function initials(name) {
-  const parts = name.trim().split(/\s+/);
-  if (parts.length >= 2) return parts[1][0] + parts[0][0];
-  return parts[0].substring(0, 2);
+  const p = name.trim().split(/\s+/);
+  return p.length >= 2 ? p[1][0] + p[0][0] : p[0].substring(0,2);
 }
-
 function waLink(phone) {
-  const digits = phone.replace(/\D/g, "").replace(/^0/, "972");
-  return `https://wa.me/${digits}`;
+  return "https://wa.me/972" + phone.replace(/\D/g,"").replace(/^0/,"");
 }
 
 function renderList(list) {
   const wrap = document.getElementById("listWrap");
-  const badge = document.getElementById("countBadge");
-  badge.textContent = list.length + " עובדים";
+  document.getElementById("countBadge").textContent = list.length + " עובדים";
   openIdx = null;
-
   if (list.length === 0) {
-    wrap.innerHTML = `
-      <div class="state-box">
-        <div class="icon">🔍</div>
-        <p>לא נמצאו עובדים</p>
-        <p class="sub">נסה מילת חיפוש אחרת</p>
-      </div>`;
+    wrap.innerHTML = `<div class="state-box"><div class="icon">🔍</div><p>לא נמצאו עובדים</p></div>`;
     return;
   }
-
-  wrap.innerHTML = list.map((emp, i) => `
+  wrap.innerHTML = list.map((e,i) => `
     <div class="employee-card" id="card-${i}" onclick="toggleCard(${i})">
       <div class="card-main">
-        <div class="avatar">${initials(emp.name)}</div>
+        <div class="avatar">${initials(e.name)}</div>
         <div class="card-info">
-          <div class="card-name">${emp.name}</div>
-          <div class="card-email">${emp.email || emp.phone}</div>
+          <div class="card-name">${e.name}</div>
+          <div class="card-sub">${e.email || e.phone}</div>
         </div>
         <div class="quick-btns" onclick="event.stopPropagation()">
-          ${emp.phone ? `<a class="qbtn" href="tel:${emp.phone}" title="התקשר">📞</a>` : ""}
-          ${emp.phone ? `<a class="qbtn" href="${waLink(emp.phone)}" title="WhatsApp">💬</a>` : ""}
-          ${emp.email ? `<a class="qbtn" href="mailto:${emp.email}" title="מייל">✉️</a>` : ""}
+          ${e.phone ? `<a class="qbtn" href="tel:${e.phone}">📞</a>` : ""}
+          ${e.phone ? `<a class="qbtn" href="${waLink(e.phone)}">💬</a>` : ""}
+          ${e.email ? `<a class="qbtn" href="mailto:${e.email}">✉️</a>` : ""}
         </div>
       </div>
       <div class="card-detail">
-        ${emp.phone ? `<div class="detail-row">📞 <span>${emp.phone}</span></div>` : ""}
-        ${emp.email ? `<div class="detail-row">✉️ <span>${emp.email}</span></div>` : ""}
+        ${e.phone ? `<div class="detail-row">📞 <span>${e.phone}</span></div>` : ""}
+        ${e.email ? `<div class="detail-row">✉️ <span>${e.email}</span></div>` : ""}
         <div class="detail-actions">
-          ${emp.phone ? `<a class="daction" href="tel:${emp.phone}">📞 התקשר</a>` : ""}
-          ${emp.phone ? `<a class="daction" href="${waLink(emp.phone)}">💬 WhatsApp</a>` : ""}
-          ${emp.email ? `<a class="daction mail" href="mailto:${emp.email}">✉️ מייל</a>` : ""}
+          ${e.phone ? `<a class="daction" href="tel:${e.phone}">📞 התקשר</a>` : ""}
+          ${e.phone ? `<a class="daction" href="${waLink(e.phone)}">💬 WhatsApp</a>` : ""}
+          ${e.email ? `<a class="daction mail" href="mailto:${e.email}">✉️ מייל</a>` : ""}
         </div>
       </div>
-    </div>
-  `).join("");
+    </div>`).join("");
 }
 
-function toggleCard(idx) {
-  if (openIdx !== null && openIdx !== idx) {
-    document.getElementById("card-" + openIdx)?.classList.remove("open");
-  }
-  const card = document.getElementById("card-" + idx);
-  card.classList.toggle("open");
-  openIdx = card.classList.contains("open") ? idx : null;
+function toggleCard(i) {
+  if (openIdx !== null && openIdx !== i)
+    document.getElementById("card-"+openIdx)?.classList.remove("open");
+  const c = document.getElementById("card-"+i);
+  c.classList.toggle("open");
+  openIdx = c.classList.contains("open") ? i : null;
 }
 
 function filterEmployees() {
   const q = document.getElementById("searchInput").value.trim().toLowerCase();
-  if (!q) { renderList(allEmployees); return; }
-  renderList(allEmployees.filter(e =>
+  renderList(q ? allEmployees.filter(e =>
     e.name.toLowerCase().includes(q) ||
     e.email.toLowerCase().includes(q) ||
-    e.phone.includes(q)
-  ));
+    e.phone.includes(q)) : allEmployees);
 }
 
-// ── אתחול ──────────────────────────────────────
 async function init() {
   const wrap = document.getElementById("listWrap");
-  const footer = document.getElementById("footer");
-
-  // בדיקת config
-  if (CONFIG.clientSecret === "f752ddfa-7f5b-4ebc-8529-e4da6118d9e8") {
-    wrap.innerHTML = `
-      <div class="state-box">
-        <div class="icon">⚙️</div>
-        <p>יש להגדיר את פרטי ה-API בקובץ</p>
-        <p class="sub">פתח את index.html ועדכן את CONFIG.clientSecret</p>
-      </div>`;
+  if (WORKER_URL.includes("YOUR_WORKER_NAME")) {
+    wrap.innerHTML = `<div class="state-box"><div class="icon">⚙️</div><p>יש להגדיר את WORKER_URL בקובץ</p></div>`;
     return;
   }
-
   try {
-    allEmployees = await fetchEmployees();
+    const res = await fetch(WORKER_URL);
+    if (!res.ok) throw new Error("שגיאת שרת: " + res.status);
+    const buffer = await res.arrayBuffer();
+    const data = new Uint8Array(buffer);
+    const wb = XLSX.read(data, { type: "array" });
+    const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: "" });
+    allEmployees = rows.map(r => ({
+      name:  (r[COL_NAME]  || "").toString().trim(),
+      email: (r[COL_EMAIL] || "").toString().trim(),
+      phone: (r[COL_PHONE] || "").toString().trim(),
+    })).filter(e => e.name);
     renderList(allEmployees);
-    footer.textContent = "עודכן לאחרונה: " + new Date().toLocaleString("he-IL");
-  } catch (err) {
-    console.error(err);
-    wrap.innerHTML = `
-      <div class="state-box">
-        <div class="icon">⚠️</div>
-        <p>שגיאה בטעינת הנתונים</p>
-        <p class="sub">${err.message}</p>
-      </div>`;
+    document.getElementById("footer").textContent = "עודכן: " + new Date().toLocaleString("he-IL");
+  } catch(err) {
+    wrap.innerHTML = `<div class="state-box"><div class="icon">⚠️</div><p>שגיאה בטעינה</p><p class="sub">${err.message}</p></div>`;
   }
 }
 
-// טעינת SheetJS ואז init
-const script = document.createElement("script");
-script.src = "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js";
-script.onload = init;
-document.head.appendChild(script);
+const s = document.createElement("script");
+s.src = "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js";
+s.onload = init;
+document.head.appendChild(s);
 </script>
-
 </body>
 </html>
